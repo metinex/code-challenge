@@ -1,0 +1,15 @@
+{
+  "name": "code-challange",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp start",
+    "default": "gulp default"
+  },
+  "private": true,
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "connect-history-api-fallback": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-npm-script-sync": "^1.0.3"
+  }
+}

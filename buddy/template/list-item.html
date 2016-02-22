@@ -1,0 +1,32 @@
+<a id="buddyListItem<%= buddy.id %>" href="/buddies/<%= buddy.id %>"
+   class="list-group-item list-group-item-<%= buddy.statusClass %>">
+  <span class="list-group-item-text"><%= buddy.fullName %></span> &nbsp;(<span class="list-group-item-heading"><%= buddy.username %></span>) &nbsp;
+
+  <button type="button" class="btn btn-prioritize btn-primary btn-sm pull-right">
+    <span class="glyphicon glyphicon-<%= buddy.prioritizedClass %>" aria-hidden="true"></span>
+  </button>
+
+  <button type="button" class="btn  btn-trash btn-default btn-sm pull-right">
+    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+  </button>
+
+  <span class="list-group-item-text">
+    <span class="label label-<%= buddy.statusClass %>"><%= buddy.status %></span>
+  </span>
+
+  <p class="<%= buddy.extendedClass %>buddy-list-item-details list-group-item-text">&nbsp;</p>
+
+  <% if (buddy.lastOnlineScreen) { %>
+  <p class="<%= buddy.extendedClass %>buddy-list-item-details list-group-item-text"><strong>Last online
+    : </strong><%= buddy.lastOnlineScreen %></p>
+  <% } %>
+
+  <p class="<%= buddy.extendedClass %>buddy-list-item-details list-group-item-text"><strong>Bio : </strong><%=
+    buddy.bio %></p>
+
+  <p class="<%= buddy.extendedClass %>buddy-list-item-details list-group-item-text"><strong>Birthday : </strong><%=
+    buddy.birthdayScreen %></p>
+
+  <p class="<%= buddy.extendedClass %>buddy-list-item-details list-group-item-text"><strong>Email : </strong><%=
+    buddy.email %></p>
+</a>

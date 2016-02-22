@@ -1,0 +1,25 @@
+<div class="row col-md-6">
+  <div class="input-group">
+
+    <div class="input-group-btn">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-sort" aria-hidden="true"></span> Sorted by <span><%= controls.get('sortBy') %></span> <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a id="linkSortByOrder" href="#">Sort by Order</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a id="linkSortByUsername" href="#">Sort by Username</a></li>
+        <li><a id="linkSortByStatus" href="#">Sort by Status</a></li>
+        <li><a id="linkSortByFullName" href="#">Sort by Full Name</a></li>
+      </ul>
+    </div><!-- /btn-group -->
+
+    <input type="text" class="form-control" aria-label="..." value="<%= controls.get('filterText') %>" />
+
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-<%= controls.get('filterPriorityClass') %>" aria-hidden="true"></span>
+      <input type="checkbox" aria-label="..."<%= controls.get('filterPriorityChecked') %>>
+    </span>
+
+  </div><!-- /input-group -->
+</div><!-- /.col-lg-12 -->
