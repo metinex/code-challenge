@@ -8,6 +8,7 @@ define([
 
     routes : {
       'test' : 'test',
+      'home' : 'app',
       'buddies/:id' : 'buddies',
       'success/:id' : 'userEdit',
       'buddy/add' : 'buddyAdd',
@@ -68,6 +69,7 @@ define([
       global.console.info('Navigated to app');
       var appView = getInstance('appView');
       if (appView) {
+        appView.model.set('target', 'home');
         return appView;
       }
       this.initializeAppView(function() {

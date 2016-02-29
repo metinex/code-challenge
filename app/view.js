@@ -30,6 +30,7 @@ define([
       this.listenTo(this.model, 'change:target', function (model, target) {
         context.onTargetChange(model, target);
       });
+      this.onTargetChange(this.model, this.model.get('target'));
 
       return this;
     },
