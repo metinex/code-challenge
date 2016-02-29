@@ -2,11 +2,12 @@ define([
   'util/global',
   'user/view/add',
   'base/view',
+  'user/view/base',
   'util/require-promise',
   'util/assign',
   'util/shared-instance',
   'util/promise'
-], function (global, UserAddView, BaseView, requirePromise, assign, getInstance) {
+], function (global, UserAddView, BaseView, UserBaseView, requirePromise, assign, getInstance) {
 
   /**
    * BuddyAddView
@@ -59,14 +60,17 @@ define([
 
       return requirePromise(['util/bootbox-confirm'])
         .then(function(prompt) {
-          return prompt('Are sure to clear?');
+          return prompt('Are sure to cancel it?');
         })
         .then(function(result) {
           if (result !== true) {
             return false;
           }
 
-          UserView.prototype.onReset.apply(context, args);
+          UserBaseView.prototype.onReset.apply(context, args);
+          Backbone.history.navigate('buddies', {
+            trigger : true
+          });
           context.render();
         })
         .catch(function(error) {

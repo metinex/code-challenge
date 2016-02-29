@@ -55,7 +55,7 @@ define([
             addView
               .render()
               .asyncRender
-                .then(function() {
+                .then(function(addView) {
                   addView.model.set({
                     username : 'test@user.com',
                     fullName : 'Test User',

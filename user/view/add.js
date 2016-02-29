@@ -70,7 +70,6 @@ define([
       var parent = UserView.prototype.onSubmit.apply(this, arguments);
 
       if (parent === false) {
-        console.log(parent, this.model.attributes);
         return false;
       }
 

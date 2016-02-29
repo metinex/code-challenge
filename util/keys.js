@@ -1,7 +1,7 @@
 /**
- * Module for polyfill of assign methogs of an object
+ * Module for polyfill of getting key from an object
  * @OOP Implementing Module Pattern along with RequireJS' define statement
- * @module util/assign
+ * @module util/keys
  */
 define(['util/global', 'underscore'], function (global, _) {
 

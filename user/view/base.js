@@ -122,6 +122,7 @@ define([
     },
 
     onReset : function () {
+      console.log(this.model.defaults);
       return this.model
         .clear()
         .set(this.model.defaults);

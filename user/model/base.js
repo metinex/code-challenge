@@ -26,8 +26,8 @@ define([
       this.listenTo(this, 'change', function (model) {
         context.isValid(keys(model.changed));
       });
-      this.listenTo(this, 'change:birthdayScreen', function (model, blabla) {
-        var isValid = context.isValid(['birthday', 'birthdayScreen']);
+      this.listenTo(this, 'change:birthdayScreen', function (model) {
+        context.isValid(['birthdayScreen']);
       });
 
       return BaseModel.prototype.initialize.apply(this, arguments);
