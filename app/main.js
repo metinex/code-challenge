@@ -5,6 +5,23 @@
 require.config({
   baseUrl : '/',
   paths : {
+    mocha : '//cdnjs.cloudflare.com/ajax/libs/mocha/2.4.5/mocha.min',
+    'mocha-css' : '//cdnjs.cloudflare.com/ajax/libs/mocha/2.4.5/mocha.min',
+
+    /**
+     * Chai is a BDD / TDD assertion library
+     * @see http://chaijs.com/
+     */
+    chai : '//cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.min',
+    /**
+     * Chai Assertion Matchers for Backbone.js
+     * @see https://github.com/matthijsgroen/chai-backbone
+     */
+    'chai-changes' : '//rawgit.com/matthijsgroen/chai-changes/master/chai-changes',
+    'chai-backbone' : '//rawgit.com/matthijsgroen/chai-backbone/master/chai-backbone',
+
+    'sinon' : '//cdnjs.cloudflare.com/ajax/libs/sinon.js/1.15.4/sinon.min',
+
     /**
      * A RequireJS CSS loader plugin to allow CSS requires and optimization
      * @see https://github.com/guybedford/require-css*
@@ -31,7 +48,7 @@ require.config({
        * Plugin to Backbone.js to allow for model fixtures
        * @see https://github.com/huffingtonpost/backbone-fixtures
        */
-    'backbone-fixtures': '//rawgit.com/huffingtonpost/backbone-fixtures/master/backbone-fixtures',
+    'backbone-fixtures' : '//rawgit.com/huffingtonpost/backbone-fixtures/master/backbone-fixtures',
 
     /**
      * A validation plugin for Backbone.js that validates both your model as well as form inpu
@@ -70,6 +87,11 @@ require.config({
      */
     'bootstrap-datepicker' : '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min',
     'bootstrap-datepicker-style' : 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.min'
+  },
+  shim : {
+    mocha : {
+      exports : 'mocha'
+    }
   },
   map: {
     '*': {

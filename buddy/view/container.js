@@ -5,6 +5,7 @@ define([
   return BaseView.extend({
 
     customTag : 'buddy-container',
+    name: 'buddy/view/container',
 
     initialize: function (options) {
       BaseView.prototype.initialize.apply(this, arguments);
@@ -67,7 +68,7 @@ define([
 
         id = parseInt(id, 10);
         if (isNaN(id) !== true) {
-          buddyListView.show(id);
+          buddyListView.toggleItem(id);
         }
 
       });

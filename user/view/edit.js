@@ -1,7 +1,7 @@
 define([
   'util/global',
   'underscore',
-  'user/view',
+  'user/view/base',
   'util/require-promise',
   'moment'
 ], function (global, _, UserView, requirePromise, moment) {
@@ -17,6 +17,7 @@ define([
     customTag: 'user-edit',
     disableAutoRender : true,
     disableAutoModel : true,
+    name: 'user/view/edit',
 
     /**
      * Constructs sign up view.
@@ -30,7 +31,7 @@ define([
       this.model = this.collection.get(options.id);
 
       if (!this.model) {
-        Backbone.history.navigate('signup', {
+        return Backbone.history.navigate('signup', {
           trigger: true
         });
       }
@@ -38,12 +39,6 @@ define([
       this.render();
 
       return this;
-    },
-
-    templateData: function () {
-      return {
-        user : this.model
-      };
     },
 
     onSubmit : function () {

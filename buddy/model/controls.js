@@ -4,7 +4,7 @@ define([
   return BaseModel.extend({
 
     defaults : {
-      sortBy : 'order',
+      sortBy : 'defaultOrder',
       filterText : '',
       filterPriority : false
     },

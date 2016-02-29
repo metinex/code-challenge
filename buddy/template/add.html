@@ -1,52 +1,55 @@
-<h2>Add Buddy</h2>
+<div class="row col-md-6">
+  <h2>Add Buddy</h2>
 
-<form name="buddyAdd" id="buddAddForm" role="form">
+  <form name="buddyAdd" id="buddAddForm" role="form">
 
-  <div class="form-group">
-    <label for="username" class="control-label">Username</label>
-    <div>
-      <input type="text" class="form-control" id="inputUsername" name="username"
-        required
-        placeholder="A unique name for logging in"
-        value="<%= buddy.username %>"
+    <div class="form-group">
+      <label for="username" class="control-label">Username</label>
+      <div>
+        <input type="text" class="form-control" id="inputUsername" name="username"
+               required
+               placeholder="A unique name for logging in"
+               value="<%= buddy.username %>"
+        />
+        <span class="help-block invisible">&nbsp;</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fullName" class="control-label">Full name</label>
+      <input type="text" class="form-control" id="buddyFullName" name="fullName"
+             required
+             placeholder="Your first and last name"
+             value="<%= buddy.fullName %>"
       />
       <span class="help-block invisible">&nbsp;</span>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="fullName" class="control-label">Full name</label>
-    <input type="text" class="form-control" id="buddyFullName" name="fullName"
-      required
-      placeholder="Your first and last name"
-      value="<%= buddy.fullName %>"
-    />
-    <span class="help-block invisible">&nbsp;</span>
-  </div>
+    <div class="form-group">
+      <label for="bio" class="control-label">Bio</label>
+      <div>
+        <input type="text" class="form-control" id="bio" name="bio"
+               placeholder="Short life summary or motto"
+               value="<%= buddy.bio %>"
+        />
+        <span class="help-block invisible">&nbsp;</span>
+      </div>
+    </div>
 
-  <div class="form-group">
-    <label for="bio" class="control-label">Bio</label>
-    <div>
-      <input type="text" class="form-control" id="bio" name="bio"
-        placeholder="Short life summary or motto"
-        value="<%= buddy.bio %>"
+    <div class="form-group">
+      <label for="birthdayScreen" class="control-label">Birthday</label>
+      <input type="text" class="form-control date" id="birthdayScreen" name="birthdayScreen"
+             required
+             value="<%= buddy.birthdayScreen %>"
       />
       <span class="help-block invisible">&nbsp;</span>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="birthdayScreen" class="control-label">Birthday</label>
-    <input type="text" class="form-control date" id="birthdayScreen" name="birthdayScreen"
-      required
-      value="<%= buddy.birthdayScreen %>"
-    />
-    <span class="help-block invisible">&nbsp;</span>
-  </div>
+    <div class="form-group">
+      <input type="submit" id="btnAddBuddy" class="btn btn-success" value="Add Buddy"/>
+      <button id="btnReset" class="btn btn-info">Clear</button>
+    </div>
 
-  <div class="form-group">
-    <input type="submit" id="btnAddBuddy" class="btn btn-success" value="Add Buddy"/>
-    <button id="btnReset" class="btn btn-info">Clear</button>
-  </div>
+  </form>
 
-</form>
+</div>

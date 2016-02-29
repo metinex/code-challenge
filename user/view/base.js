@@ -16,7 +16,7 @@ define([
       return this;
     },
 
-    events: {
+    events : {
       'submit form': function (event) {
         event.preventDefault();
         this.onSubmit($(event.target));
@@ -29,7 +29,7 @@ define([
         event.preventDefault();
         this.onSubmit($(event.target));
       },
-
+      
       //for simple one-way binding
       'change input': function (event) {
         this.onInput($(event.target));
@@ -46,14 +46,16 @@ define([
     },
 
     templateData : function() {
-      return {
+      var data = {
         user : assign(this.model.attributes, {
+          // JAYJAY: birthdayScreen comes with model.attributes too
           birthdayScreen : this.model.get('birthdayScreen')
         })
       };
+      return data;
     },
 
-    configureValidation: function (view) {
+    configureValidation : function (view) {
 
       view = view || this;
 
@@ -86,27 +88,20 @@ define([
       Backbone.Validation.bind(view);
     },
 
-    validateAll: function () {
+    validateAll : function () {
       this.model.validate();
       return this.model.isValid(true);
     },
-
-    validateAttribute: function ($element) {
-      var fieldName = $element.attr('name');
-      return this.model.isValid([fieldName]);
-    },
-
-    updateAttribute: function ($element) {
+    updateAttribute : function ($element) {
       var fieldName = $element.attr('name');
       return this.model.set(fieldName, $element.val());
     },
 
-    updateAll: function () {
+    updateAll : function () {
       var context = this;
-      this.$el
-        .find('input[type=text],input[type=password]')
+      this.$el.find('input[type=text],input[type=password]')
         .each(function () {
-          return context.updateAttribute($(this));
+          return context.updateAttribute($(this)).bind(context);
         });
     },
 
@@ -116,11 +111,6 @@ define([
         tagName = $element.prop('tagName'),
         type = $element.prop('type');
 
-      if (tagName === 'FORM') {
-        this.updateAll();
-        return this.validateAll();
-      }
-
       if (tagName === 'INPUT') {
         if (type === 'submit') {
           this.updateAll();
@@ -129,16 +119,15 @@ define([
       }
 
       this.updateAttribute($element);
-      this.validateAttribute($element);
     },
 
-    onReset: function () {
+    onReset : function () {
       return this.model
         .clear()
         .set(this.model.defaults);
     },
 
-    onSubmit: function (event) {
+    onSubmit : function (event) {
       return this.model.isValid(true);
     }
 

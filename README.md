@@ -30,7 +30,7 @@ Visit https://code-exercise.firebaseapp.com
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule . index.html
 ```
-3. http://localhost (whatever host/port specified)
+3. http://localhost (or whatever host/port specified)
 
 ## Deploying to Firebase
 - Crate an account from [Firebase](https://www.firebase.com)
@@ -41,4 +41,52 @@ npm install -g firebase-tools
 npm login
 firebase deploy
 firebase open
+```
+
+## Test
+Go to https://code-exercise.firebaseapp.com/test depending on your installation (Apache installation may not work properly
+
+##Notes
+- Some Object Design Patterns are self identified with @OOP tag in the comments
+- The following commands can be used in Chrome or Firefox console to understand the app
+```javascript
+// SIGNUP USER
+// go to http://localhost/signup
+var instances = require('util/shared-instance')();
+moment = require('moment');
+instances.addView.render();
+instances.addView.model.set({
+                username : 'not_email',
+                fullName : 'test user',
+                password : 'password',
+                repeatPassword : 'password',
+                birthday : moment()
+              });
+instances.addView.model.isValid()=== false;
+instances.addView.model.set({
+                username : 'a@b.com',
+                fullName : 'test user',
+                password : 'password',
+                repeatPassword : 'password',
+                birthday : moment().subtract(20,'years')
+              });
+instances.addView.model.isValid()=== true;              
+instances.addView.onSubmit();
+```
+- Playing with FILTERING and SORTING for buddy list
+```javascript
+// go to http://localhost/buddies
+var instances = require('util/shared-instance')();
+instances.buddyControlsView.model.set({sortBy: "defaultOrder", filterText: "am", filterPriority: false});
+instances.buddyControlsView.render();
+instances.buddyControlsView.model.set({sortBy: "defaultOrder", filterText: "am", filterPriority: true});
+instances.buddyControlsView.render();
+instances.buddyControlsView.model.set({sortBy: "defaultOrder", filterText: "am", filterPriority: false});
+instances.buddyControlsView.render();
+instances.buddyControlsView.model.set({sortBy: "defaultOrder", filterText: "", filterPriority: false});
+instances.buddyControlsView.render();
+instances.buddyControlsView.model.set({sortBy: "username", filterText: "", filterPriority: false});
+instances.buddyControlsView.render();
+instances.buddyControlsView.model.set({sortBy: "status", filterText: "", filterPriority: false});
+instances.buddyControlsView.render();
 ```

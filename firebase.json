@@ -1,6 +1,6 @@
 {
-  "firebase" : "code-exercise",
-  "public" : "./",
+  "firebase": "code-exercise",
+  "public": "./",
   "ignore" : [
     "firebase.json",
     "**/.*",

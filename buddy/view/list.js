@@ -16,6 +16,7 @@ define([
     customTag : 'buddy-list',
     itemViews : [],
     rendered : false,
+    name: 'buddy/view/list',
     
     initialize : function(options) {
       var context = this;
@@ -43,9 +44,12 @@ define([
       this.collectionFecthed
         .then(function(collection) {
 
-          context.listenTo(collection, 'reset sort', function(collection) {
+            // listen to the reset event of the list view to be able to trigger re-render
+          context.listenTo(collection, 'reset', function(collection) {
             context.onChange();
           });
+
+            // listen to the collection when a new buddy is added into it
           context.listenTo(collection, 'add', function(collection) {
             context.onChange();
           });
@@ -59,7 +63,11 @@ define([
       return this;
     },
 
-    show : function (id) {
+    render: function(){
+      BaseView.prototype.render.apply(this, arguments);
+    },
+
+    toggleItem : function (id) {
 
       return this.collectionFecthed
         .then(function(collection) {
@@ -69,10 +77,25 @@ define([
           });
 
           if (currentActive && currentActive.set) {
-            currentActive.set('extended', false);
+
+            if( currentActive.get('id') == id && currentActive.get('extended') === true ){
+              currentActive.set('extended', false);
+            } else if( currentActive.get('id') == id && currentActive.get('extended') === false ){
+              currentActive.set('extended', true);
+            } else {
+              currentActive.set('extended', false);
+            }
+
           }
 
-          collection.get(id).set('extended', true);
+          if( currentActive && currentActive.get('id') == id && currentActive.get('extended') === true ){
+            collection.get(id).set('extended', true);
+          } else if( currentActive && currentActive.get('id') == id && currentActive.get('extended') === false ){
+            currentActive.set('extended', false);
+          } else {
+            collection.get(id).set('extended', true);
+          }
+
 
         })
         .catch(function(error) {

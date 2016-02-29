@@ -66,7 +66,6 @@ define([
       }
 
       if (this.disableAutoRender === false && this.rendered === false) {
-        this.rendered = true;
         this.render();
       }
 
@@ -74,18 +73,11 @@ define([
     },
 
     /**
-     * Do operations for frag before attaching it to DOM
-     * @OOP Utilization of Template Method Pattern
-     *
-     * @returns {Object} returns context
-     */
-    beforeRender : function () {},
-
-    /**
      * Standardized render helper, writes templateData into DOM
      * @returns {Object} returns context
      */
     render : function () {
+      this.rendered = true;
       this.templatejQuery();
 
       this.beforeRender();
@@ -97,13 +89,23 @@ define([
     },
 
     /**
+     * Do operations for frag before attaching it to DOM
+     * @OOP Utilization of Template Method Pattern
+     *
+     * @returns {Object} returns context
+     */
+    beforeRender : function () {
+
+    },
+
+    /**
      * Prepares a jQuery DOM template by using the template and template data
      */
     templatejQuery : function () {
       this.$template = $(this.template(this.templateData()));
     },
 
-    templateFrag: function () {
+    templateFrag : function () {
       this.$template.appendTo(this.frag);
     },
 
@@ -127,7 +129,7 @@ define([
      * Parses link href attributes and binds them for navigating the router
      * @returns {boolean}
      */
-    setupLinksForRouter: function () {
+    setupLinksForRouter : function () {
       var context = this;
 
       if (!Backbone.history) {
@@ -141,7 +143,7 @@ define([
       this.delegateEvents(assign(context.events || {}, {
         keyup: function (event) {
           if (event.ctrlKey || event.keyCode === 91) {
-            context.cmdPressedDown = true;
+            context.cmdPressedDown = false;
           }
         },
         keydown: function (event) {
@@ -161,11 +163,10 @@ define([
      * @param {object} event
      * @returns {boolean}
      */
-    onNavigate: function ($link, event) {
+    onNavigate : function ($link, event) {
       // Get the anchor href and protocol
-      var
-        protocol = this.protocol + "//",
-        href = $link.attr('href');
+      var href = $link.attr('href');
+      if(href.startsWith("/")) href = href.slice(1);
 
       if (!href) {
         var args = Array.prototype.slice.call(arguments);
@@ -174,14 +175,19 @@ define([
         return false;
       }
 
-      // Ensure the protocol is not part of URL, meaning its relative.
-      // Stop the event bubbling to ensure the link will not cause a page refresh.
-      if (!this.cmdPressedDown && href.slice(protocol.length) !== protocol) {
+      if (!this.cmdPressedDown) {
         event.preventDefault();
+        event.stopPropagation();
 
         // Note by using Backbone.history.navigate, router events will not be
         // triggered.  If this is a problem, change this to navigate on your
         // router.
+
+        if (href === Backbone.history.fragment){
+          // need to null out Backbone.history.fragement because
+          // navigate method will ignore when it is the same as newFragment
+          Backbone.history.fragment = null;
+        }
 
         Backbone.history.navigate(href, true);
       }
@@ -192,7 +198,7 @@ define([
      * @param {Object} options pass given options
      * @returns {Object} returns merged dependencies
      */
-    setDeps: function (options) {
+    setDeps : function (options) {
       options.deps = options.deps || {};
       this.deps = assign({
         Model: BaseModel,
@@ -212,7 +218,7 @@ define([
     /**
      * Reverts Backbone's auto div/tag wrap
      */
-    unwrapDiv: function () {
+    unwrapDiv : function () {
       this.$el = this.$el.children();
       // Unwrap the element to prevent infinitely
       // nesting elements during re-render.

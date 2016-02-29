@@ -8,6 +8,7 @@ define([
 
   return BaseView.extend({
 
+    name: 'buddy/view/list-item',
     events : {
       'click button.btn-prioritize' : function(event) {
         event.stopPropagation();
@@ -19,8 +20,21 @@ define([
         event.stopPropagation();
         event.preventDefault();
 
-        this.delete();
+        this.deleteItem();
       }
+    },
+
+    render: function(){
+      BaseView.prototype.render.apply(this, arguments);
+    },
+
+    togglePrioritize : function() {
+      var prioritized = this.model.get('prioritized');
+      this.model.set('prioritized', prioritized ? false : true);
+    },
+
+    onChange : function(){
+      BaseView.prototype.render.apply(this, arguments);
     },
 
     templateData : function() {
@@ -35,26 +49,53 @@ define([
       };
     },
 
-    delete : function() {
+    deleteItem : function() {
       var
         context = this,
         args = arguments;
 
-      return requirePromise(['util/bootbox-confirm'])
-        .then(function(prompt) {
-          return prompt('Are sure to delete ?');
-        })
-        .then(function(result) {
-          if (result !== true) {
-            return false;
-          }
+      require(['bootstrap-bootbox'], function(bootbox){
+        function bootbox_confirm(msg, callback_success, callback_cancel) {
+          var d = bootbox.confirm({message:msg, show:false, callback:function(result) {
+            if (result)
+              callback_success();
+            else if(typeof(callback_cancel) == 'function')
+              callback_cancel();
+          }});
 
+          d.on("show.bs.modal", function(event) {
+
+            // adjusting the top of modal along with deleted item
+            var offsetEl = context.$el.offset();
+            var top = offsetEl.top - 50;
+            var windowHeight = $(window).height();
+            if(windowHeight - top < 100 ){
+              top = top - 50;
+            } else if (windowHeight - top < 150){
+              top = top - 25;
+            }
+
+            $(event.target).offset({
+                top: top,
+                left: offsetEl.left,
+              //context.$el.offset().left
+            });
+            //making the size of modal the same with deleted item
+            var widthEl =  context.$el.width();
+            $(event.target).width(widthEl);
+
+            //workaround for the mismatch between bootstrap-bootbox div element and bootstrap .modal-dialog
+            $(event.target).find('.modal-dialog').width(widthEl);
+          });
+          return d;
+        }
+        bootbox_confirm("You want to delete?", function(){
           _.debounce(context.model.destroy());
           context.destroy();
-        })
-        .catch(function(error) {
-          global.console.error(error);
-        });
+        }, function(){
+        }).modal('show');
+      });
+
     },
 
     destroy : function() {
@@ -66,11 +107,6 @@ define([
       Backbone.history.navigate('buddies', {
         trigger : true
       });
-    },
-
-    togglePrioritize : function() {
-      var prioritized = this.model.get('prioritized');
-      this.model.set('prioritized', prioritized ? false : true);
     }
 
   });

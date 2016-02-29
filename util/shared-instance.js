@@ -22,7 +22,7 @@ define([], function () {
     getInstance : function (name, Obj, options) {
 
       if (!name) {
-        throw new Error('Need a unique shared instance name');
+        return this.instances;
       }
 
       if (this.instances[name]) {

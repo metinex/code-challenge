@@ -1,61 +1,64 @@
-<h2>Sign Up</h2>
+<div class="row col-md-6">
+  <h2>Sign Up</h2>
 
-<form name="signup" id="signupForm" role="form">
+  <form name="signup" id="signupForm" role="form">
 
-  <div class="form-group">
-    <label for="username" class="control-label">Username</label>
-    <div>
-      <input type="text" class="form-control" id="signupUsername" name="username"
+    <div class="form-group">
+      <label for="username" class="control-label">Username</label>
+      <div>
+        <input type="text" class="form-control" id="signupUsername" name="username"
+               required
+               placeholder="A unique name for logging in"
+               value="<%= user.username %>"
+        />
+        <span class="help-block invisible">&nbsp;</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fullName" class="control-label">Full name</label>
+      <input type="text" class="form-control" id="signupFullName" name="fullName"
              required
-             placeholder="A unique name for logging in"
-             value="<%= user.username %>"
+             placeholder="Your first and last name"
+             value="<%= user.fullName %>"
       />
       <span class="help-block invisible">&nbsp;</span>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="fullName" class="control-label">Full name</label>
-    <input type="text" class="form-control" id="signupFullName" name="fullName"
-           required
-           placeholder="Your first and last name"
-           value="<%= user.fullName %>"
-    />
-    <span class="help-block invisible">&nbsp;</span>
-  </div>
+    <div class="form-group">
+      <label for="password" class="control-label">Password</label>
+      <input type="password" class="form-control" id="signupPassword" name="password"
+             required
+             placeholder="Your password, pick something good"
+             value="<%= user.password %>"
+      />
+      <span class="help-block invisible">&nbsp;</span>
+    </div>
 
-  <div class="form-group">
-    <label for="password" class="control-label">Password</label>
-    <input type="password" class="form-control" id="signupPassword" name="password"
-           required
-           placeholder="Your password, pick something good"
-           value="<%= user.password %>"
-    />
-    <span class="help-block invisible">&nbsp;</span>
-  </div>
+    <div class="form-group">
+      <label for="repeatPassword" class="control-label">Repeat Password</label>
+      <input type="password" class="form-control" id="signupRepeatPassword" name="repeatPassword"
+             required
+             placeholder="Repeat the password you entered above"
+             value="<%= user.password %>"
+      />
+      <span class="help-block invisible">&nbsp;</span>
+    </div>
 
-  <div class="form-group">
-    <label for="repeatPassword" class="control-label">Repeat Password</label>
-    <input type="password" class="form-control" id="signupRepeatPassword" name="repeatPassword"
-           required
-           placeholder="Repeat the password you entered above"
-           value="<%= user.password %>"
-    />
-    <span class="help-block invisible">&nbsp;</span>
-  </div>
+    <div class="form-group">
+      <label for="birthdayScreen" class="control-label">Birthday</label>
+      <input type="text" class="form-control date" id="birthdayScreen" name="birthdayScreen"
+             required
+             value="<%= user.birthdayScreen %>"
+      />
+      <span class="help-block invisible">&nbsp;</span>
+    </div>
 
-  <div class="form-group">
-    <label for="birthdayScreen" class="control-label">Birthday</label>
-    <input type="text" class="form-control date" id="birthdayScreen" name="birthdayScreen"
-           required
-           value="<%= user.birthdayScreen %>"
-    />
-    <span class="help-block invisible">&nbsp;</span>
-  </div>
+    <div class="form-group">
+      <input type="submit" id="btnSignup" class="btn btn-success" value="Sign Up"/>
+      <button id="btnReset" class="btn btn-info">Clear</button>
+    </div>
 
-  <div class="form-group">
-    <input type="submit" id="btnSignup" class="btn btn-success" value="Sign Up"/>
-    <button id="btnReset" class="btn btn-info">Clear</button>
-  </div>
+  </form>
 
-</form>
+</div>

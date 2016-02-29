@@ -7,12 +7,25 @@ define([
   return Backbone.Router.extend({
 
     routes : {
+      'test' : 'test',
       'buddies/:id' : 'buddies',
       'success/:id' : 'userEdit',
       'buddy/add' : 'buddyAdd',
       buddies : 'buddies',
       signup : 'userAdd',
       '*actions' : 'app'
+    },
+
+    test : function () {
+
+      require(['jquery'], function ($) {
+        $(function () {
+          $('body').prepend('<div id="mocha"></div>');
+          require(['mocha', 'spec/app', 'spec/user'], function (mocha) {
+            mocha.run();
+          })
+        })
+      });
     },
 
     initialize : function() {
@@ -74,11 +87,19 @@ define([
         require([
           'user/view/add',
           'user/model/add',
-          'user/collection',
+          'user/collection/base',
           'text!user/template/add.html'
         ], function(UserAddView, UserAddModel, UserCollection, userAddTemplate) {
 
-          var userAddView = new UserAddView({
+          //var userAddView = new UserAddView({
+          //  deps : {
+          //    Collection : UserCollection,
+          //    template : userAddTemplate,
+          //    Model : UserAddModel
+          //  }
+          //});
+
+          userAddView = getInstance('addView', UserAddView, {
             deps : {
               Collection : UserCollection,
               template : userAddTemplate,
@@ -100,7 +121,7 @@ define([
 
         require([
           'user/view/edit',
-          'user/collection',
+          'user/collection/base',
           'text!user/template/edit.html'
         ], function(UserEditView, UserCollection, userEditTemplate) {
 

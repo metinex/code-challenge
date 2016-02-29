@@ -14,6 +14,7 @@ define([
     customTag : 'app-view',
     disableOnChange : true,
     disableRenderOnChange : true,
+    name: 'app/view',
 
     initialize : function (options) {
       var context = this;
@@ -37,17 +38,17 @@ define([
       var $target;
       target = model.get('target');
 
-      $target = this.$el
-        .find(target)
-        .removeClass('hidden')
-        .siblings('.section')
-        .addClass('hidden');
-
       this.$el
         .find('.nav li')
         .removeClass('active')
         .filter('.nav-link-' + target)
         .addClass('active');
+
+      $target = this.$el
+        .find(target)
+        .removeClass('hidden')
+        .siblings('.section')
+        .addClass('hidden');
 
       return $target;
     }

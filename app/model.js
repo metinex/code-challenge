@@ -4,7 +4,7 @@ define([
 
   return BaseModel.extend({
 
-    defaults: {
+    defaults : {
       target: 'home'
     }
 

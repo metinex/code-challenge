@@ -1,7 +1,7 @@
 define([
   'util/global',
   'underscore',
-  'user/view',
+  'user/view/base',
   'util/require-promise',
   'util/promise'
 ], function (global, _, UserView, requirePromise) {
@@ -16,6 +16,8 @@ define([
 
     customTag : 'user-add',
     disableRenderOnChange : true,
+    name: 'user/view/add',
+    asyncRender : null,
 
     /**
      * Renders sign up view.
@@ -31,43 +33,54 @@ define([
 
       $dates = this.$el.find('input.date');
 
-      requirePromise(['bootstrap-datepicker'])
-        .then(function ($) {
+      this.asyncRender = new global.Promise(function(resolve, reject) {
+        requirePromise(['bootstrap-datepicker'])
+          .then(function ($) {
 
-          $dates
-            .datepicker({
-              format : 'mm/dd/yyyy',
-              endDate : '-14y',
-              startDate : '-150y',
-              immediateUpdates : true
-            });
+            $dates
+              .datepicker({
+                format : 'mm/dd/yyyy',
+                endDate : '-14y',
+                startDate : '-150y',
+                immediateUpdates : true
+              });
 
-          return requirePromise(['backbone-validation']);
-        })
-        .catch(function (error) {
-          global.console.error(error);
-        })
-        .then(function () {
-          context.configureValidation(context);
-        })
-        .catch(function (error) {
-          global.console.error(error);
-        });
+            return requirePromise(['backbone-validation']);
+          })
+          .catch(function (error) {
+            reject(error);
+            global.console.error(error);
+          })
+          .then(function () {
+            context.configureValidation(context);
+            resolve(context);
+          })
+          .catch(function (error) {
+            reject(error);
+            global.console.error(error);
+          });
+      });
 
       return this;
     },
 
-    onSubmit : function() {
+    onSubmit : function(redirect) {
+      redirect = typeof redirect === 'boolean' ? redirect : true;
+
       var parent = UserView.prototype.onSubmit.apply(this, arguments);
 
       if (parent === false) {
+        console.log(parent, this.model.attributes);
         return false;
       }
 
       this.collection.add(this.model);
-      Backbone.history.navigate('success/' + this.model.cid, {
-        trigger: true
-      });
+
+      if (redirect === true) {
+        Backbone.history.navigate('success/' + this.model.cid, {
+          trigger: true
+        });
+      }
 
       return true;
     },
@@ -79,7 +92,7 @@ define([
 
       return requirePromise(['util/bootbox-confirm'])
         .then(function(prompt) {
-          return prompt('Are sure to delete ?');
+          return prompt('Are sure to clear?');
         })
         .then(function(result) {
           if (result !== true) {

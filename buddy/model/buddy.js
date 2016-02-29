@@ -1,5 +1,5 @@
 define([
-  'user/model',
+  'user/model/base',
   'util/assign',
   'moment'
 ], function (UserModel, assign, moment) {
@@ -54,7 +54,7 @@ define([
       /**
        * Scores the buddy both with status and prioritization
        */
-      order: {
+      defaultOrder: {
         deps: ['statusOrder', 'prioritized'],
         get: function (statusOrder, prioritized) {
           if (prioritized) {
@@ -88,7 +88,7 @@ define([
         }
       }
 
-    }),
+    })
 
   });
 });

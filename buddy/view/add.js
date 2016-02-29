@@ -18,6 +18,7 @@ define([
 
     customTag : 'buddy-add',
     disableRenderOnChange : true,
+    name: 'buddy/view/add',
 
     initialize : function(options) {
       BaseView.prototype.initialize.apply(this, arguments);
@@ -58,7 +59,7 @@ define([
 
       return requirePromise(['util/bootbox-confirm'])
         .then(function(prompt) {
-          return prompt('Are sure to delete ?');
+          return prompt('Are sure to clear?');
         })
         .then(function(result) {
           if (result !== true) {

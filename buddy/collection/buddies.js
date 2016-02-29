@@ -11,33 +11,43 @@ define([
 
     url : '/buddy/data/read.json',
 
+    counter: 0,
+
     initialize : function () {
       var context = this;
 
-      this.listenTo(this, 'add', function (collection, models) {
-        context.changeSort();
-        context.saveModelState(models);
-      });
-
+        // listen to the time when the buddy data is ready
       this.listenTo(this, 'sync', function (collection, models) {
-        context.changeSort();
-        context.saveModelState(models);
+
+        this.updateCollection(collection, models);
+
+        // keeping track of the time when a new buddy is added
+        _.once(this.listenTo(this, 'add', this.updateCollection));
       });
 
+        // keep track of a buddy being deleted
       this.listenTo(this, 'destroy', function(model, collection) {
-        context.saveModelState();
+          // update stored original data when a buddy is deleted
+        context.storeOriginalState();
       });
 
-      this.listenTo(this, 'reset', function () {
+        // listen to the prioritization of a buddy
+      this.listenTo(this, 'change:defaultOrder', function () {
+          // change the order of collection when a buddy is prioritized or de-prioritized
         this.changeSort();
-      });
-
-      this.listenTo(this, 'change:order', function () {
         this.trigger('reset');
       });
     },
 
-    stateModelsCollection : new BuddiesStateCollection(),
+      // updating the collection when an event occurs to change the order of the models
+    updateCollection : function (models, collection) {
+      // sort by default order as soon as the data is loaded
+      this.changeSort();
+        // keep original data for future use
+      this.storeOriginalState(collection.models);
+    },
+
+    stateOriginalCollection : new BuddiesStateCollection(),
 
     /**
      * Stores current models for restoring it later
@@ -45,13 +55,13 @@ define([
      *
      * @OOP Using Memento Pattern for saving a state of collection models
      */
-    saveModelState : function(models) {
+    storeOriginalState : function(models) {
       models = models || this.models;
-      return this.stateModelsCollection.reset(models);
+      return this.stateOriginalCollection.reset(models);
     },
 
-    restoreModelState : function(trigger) {
-      return this.reset(this.stateModelsCollection.models, {
+    restoreOriginalState : function(trigger) {
+      return this.reset(this.stateOriginalCollection.models, {
         trigger : trigger ? true : false
       });
     },
@@ -66,7 +76,7 @@ define([
         .apply(this, arguments);
     },
 
-    selectedSortStrategy : 'order',
+    selectedSortStrategy : 'defaultOrder',
 
     sortStrategies : {
       username : function (buddy) {
@@ -87,38 +97,11 @@ define([
         });
         return str;
       },
-      order : function (buddy) {
+      defaultOrder : function (buddy) {
         if (buddy.get) {
-          return buddy.get('order') + this.sortStrategies.usernameReverse(buddy);
+          return buddy.get('defaultOrder') + this.sortStrategies.usernameReverse(buddy);
         }
       }
-    },
-
-
-    filterText : function (text) {
-      if (!text || text === '') {
-        return this.restoreModelState();
-      }
-
-      this.restoreModelState(false);
-
-      var filteredModels = this.filter(function(model) {
-        return _.some(_.values(model.pick(['username', 'fullName'])), function(value) {
-          return ~value.toLowerCase().indexOf(text);
-        });
-      });
-
-      this.reset(filteredModels);
-    },
-
-    filterPriority : function (priorityOn) {
-      if (priorityOn !== true) {
-        return false;
-      }
-
-      this.reset(this.where({
-        prioritized : priorityOn
-      }));
     },
 
     /**
@@ -129,19 +112,11 @@ define([
      * @param value {string, boolean}  value to pass to chained method
      * @returns {object} returns context
      */
-    filterBy : function (by, value) {
-      if (typeof this[by] !== 'function') {
-        return this;
-      }
-
-      this[by](value);
-      return this;
-    },
 
     changeSort : function(strategy) {
       this.selectedSortStrategy = strategy || this.selectedSortStrategy;
       this.comparator = this.sortStrategies[this.selectedSortStrategy];
-      if (this.selectedSortStrategy === 'order') {
+      if (this.selectedSortStrategy === 'defaultOrder') {
         this.reverseSort(true);
         this.trigger('sort');
       } else {
@@ -153,6 +128,29 @@ define([
       this.sort({ silent : true });
       this.models = this.models.reverse();
       return silent ? this : this.trigger('reset', this, {});
+    },
+
+    resetFilterCollection: function(filterModel){
+      this.reset(this.filterCollection(filterModel), { trigger : false } );
+      this.changeSort();
+      this.trigger('reset');
+    },
+
+    filterCollection : function(filterModel){
+      var text = filterModel.get('filterText').toLowerCase();
+      var priorityValue = filterModel.get('filterPriority');
+
+      var filteredModels = _.filter(this.stateOriginalCollection.models, function(model) {
+        return _.some(_.values(model.pick(['username', 'fullName'])), function(value) {
+          return ~value.toLowerCase().indexOf(text);
+        });
+      });
+
+      if ( priorityValue === true ){
+        filteredModels = _.filter( filteredModels, function(item){return item.get('prioritized') == true} );
+      }
+      return filteredModels;
+
     }
 
   });
