@@ -1,3 +1,8 @@
+/**
+ * Promisify callbacks of Bootstrap Bootbox ("Bootstrap modals made easy")
+ * @see http://bootboxjs.com/
+ * @module util/bootbox-confirm
+ */
 define([
   'util/global',
   'bootstrap-bootbox',

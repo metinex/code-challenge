@@ -2,9 +2,8 @@ define([
   'base/view',
   'backbone',
   'util/assign',
-  'util/jquery-serialize-object',
   'util/shared-instance'
-], function (BaseView, Backbone, assign, $, getInstance) {
+], function (BaseView, Backbone, assign, getInstance) {
 
   return BaseView.extend({
 

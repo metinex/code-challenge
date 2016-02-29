@@ -77,7 +77,7 @@ define([
 
             $(event.target).offset({
                 top: top,
-                left: offsetEl.left,
+                left: offsetEl.left
               //context.$el.offset().left
             });
             //making the size of modal the same with deleted item
