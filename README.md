@@ -2,8 +2,8 @@
 
 ## Requirements:
 
-- Challenge 1 - [REQUIREMENTS] (Sign Up Form)
-- Challenge 2 - [REQUIREMENTS] (Buddies List)
+- Challenge 1 - [Sign Up Form] (REQUIREMENTS)
+- Challenge 2 - [Buddies List] (REQUIREMENTS)
 
 ## Running Application
 Visit https://code-exercise.firebaseapp.com
