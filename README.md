@@ -2,7 +2,7 @@
 
 ## Requirements:
 
-- Challenge 1 - [Sign Up Form.] (https://github.com/metinex/code-challenge/blob/master/REQUIREMENTS.md#challenge-1-sign-up-requirements)
+- Challenge 1 - [Sign Up Form] (https://github.com/metinex/code-challenge/blob/master/REQUIREMENTS.md#challenge-1-sign-up-requirements)
 - Challenge 2 - [Buddies List] (https://github.com/metinex/code-challenge/blob/master/REQUIREMENTS.md#challenge-2-buddy-list-requirements)
 
 ## Running Application
