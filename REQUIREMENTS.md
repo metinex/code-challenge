@@ -14,37 +14,37 @@ The following challenges are used to assess a candidate’s proficiencies for pl
 Create a sign up page. This must be accessible and validate user data entered into all fields.
 
 
-## 1. Fields: 
+### 1. Fields: 
 
-### Username 
+#### Username 
 - must be an email address. 
 - It cannot be longer than 56 characters. Required. 
 
-### Password & Confirm Password 
+#### Password & Confirm Password 
 - Must be at least 6 characters. 
 - Passwords must match. Required. 
 
-### First & Last Name 
+##### First & Last Name 
 - Letters only. May not be more than 50 characters. Last Name Optional 
 
-### Birthday 
+#### Birthday 
 - Must be visible to the user in MM/DD/YYYY (03/21/1982) format, but submit as ISO 8601. 
 - User must be at least 14 and not older than 150. Required. 
 
-## 2. Submit 
+### 2. Submit: 
 - Occurs either on button press or when the user hits the enter key. 
 - Only submits when there are no errors. 
 - Does not depend on the <form> element. 
 - On success, takes the user to a success view. 
 
-## 3. Clear
+### 3. Clear:
 - Clear all entered user data and any errors on click. 
 - Provide a confirmation dialog before clearing. 
 
-## 4.  Success View 
- - Should be same-page as the form. Treat this like a SPA.
- - Displays the user’s information.
- - Allow the user to expand their profile by adding a bio and interests
+### 4.  Success View:
+- Should be same-page as the form. Treat this like a SPA.
+- Displays the user’s information.
+- Allow the user to expand their profile by adding a bio and interests
 
 
 # Challenge 2: Buddy List Requirements
@@ -61,11 +61,11 @@ Create a list of buddies that can be sorted, filtered, searched and prioritized.
  - Buddies should be able to be added, prioritized and deleted. 
  - Deleting should prompt a confirmation dialog. 
 
- ## 3. Buddy Status 
- - Buddies can be Available, Busy, Idle or Offline. 
- - If the buddy is offline, the expanded information should also show the last sign in date. 
+## 3. Buddy Status 
+- Buddies can be Available, Busy, Idle or Offline. 
+- If the buddy is offline, the expanded information should also show the last sign in date. 
 
- ## 4. Add Buddy 
- - Clicking this button should open a dialog with a form to add a new buddy. 
- - Form should contain all required fields. 
- - On submit, the buddy should be added to the list.
+## 4. Add Buddy 
+- Clicking this button should open a dialog with a form to add a new buddy. 
+- Form should contain all required fields. 
+- On submit, the buddy should be added to the list.
